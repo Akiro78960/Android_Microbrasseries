@@ -43,7 +43,6 @@ public class ListeMicrobrasserieActivity extends AppCompatActivity {
     }
 
     protected void fillList(){
-        dbo.ouvrirBDmicrobrasserie();
         Vector<Integer> vImages = dbo.listeLogoMicrobrasserie();
         Vector<String> vNom = dbo.listeMicrobrasserie();
         Vector<String> vRegion = dbo.listeOrigineMicrobrasserie();

@@ -8,20 +8,30 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
+import java.util.HashMap;
+import java.util.Vector;
+
 public class BeerListActivity extends FragmentActivity {
     private ViewPager viewpager;
     private SwipeAdapter adaptateur;
+    private DBOperations dbo;
+    private Vector<HashMap> v;
+    private int taille;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beer_list);
-        viewpager = ( ViewPager) findViewById(R.id.pager);
+        dbo = new DBOperations(this);
+        v = dbo.fillBeer();
+        taille = v.size();
+        viewpager = (ViewPager) findViewById(R.id.pager);
         adaptateur = new SwipeAdapter(getSupportFragmentManager());
         viewpager.setAdapter(adaptateur);
     }
 
-    public class SwipeAdapter extends FragmentStatePagerAdapter {//TODO: FINISH THIS METHODE
+    public class SwipeAdapter extends FragmentStatePagerAdapter {
+
         public SwipeAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -29,24 +39,15 @@ public class BeerListActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int i) {
             //changements d'un fragment à l'autre, j'utilise la méthode générée par CouleurFragment
-            int couleur;
-            if ( i == 0)
-                couleur = Color.YELLOW;
 
-            else if ( i == 1) {
-                couleur= Color.RED;
-            }
-            else
-            {
-                couleur=Color.GREEN;
-            }
-            return  BeerFragment.newInstance(couleur); //méthode générée quand je crée un fichier Fragment ( CouleurFragment )
+            return BeerFragment.newInstance((String)v.elementAt(i).get("Nom"), (String)v.elementAt(i).get("Microbrasserie"), (String)v.elementAt(i).get("Type"), (String)v.elementAt(i).get("Commentaire"), (float)v.elementAt(i).get("PourcentageAlcool"), (float)v.elementAt(i).get("note")); //méthode générée quand je crée un fichier Fragment
 
 
         }
 
         @Override
         public int getCount() {
-            return 0;
+            return taille;
         }
     }
+}

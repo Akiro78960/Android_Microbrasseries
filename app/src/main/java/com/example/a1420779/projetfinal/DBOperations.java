@@ -13,9 +13,6 @@ import java.util.Vector;
 public class DBOperations {
 
     private DBMicrobrasseries dbMicrobrasserie;
-
-
-
     private SQLiteDatabase db;
     private DBBiere dbBiere;
 
@@ -26,29 +23,35 @@ public class DBOperations {
     }
 
     public Vector<String> listeMicrobrasserie() {
+        ouvrirBDmicrobrasserie();
         Vector<String> v = new Vector<String>();
         Cursor c = db.rawQuery("Select nom from microbrasserie", null);
         while(c.moveToNext()) {
             v.add(c.getString(0));
         }
+        fermerBDmicrobrasserie();
         return v;
     }
 
     public Vector<Integer> listeLogoMicrobrasserie() {
+        ouvrirBDmicrobrasserie();
         Vector<Integer> v = new Vector<Integer>();
         Cursor c = db.rawQuery("Select idimage from microbrasserie", null);
         while(c.moveToNext()) {
             v.add(c.getInt(0));
         }
+        fermerBDmicrobrasserie();
         return v;
     }
 
     public Vector<String> listeOrigineMicrobrasserie() {
+        ouvrirBDmicrobrasserie();
         Vector<String> v = new Vector<String>();
         Cursor c = db.rawQuery("Select region from microbrasserie", null);
         while(c.moveToNext()) {
             v.add(c.getString(0));
         }
+        fermerBDmicrobrasserie();
         return v;
     }
 
@@ -67,7 +70,7 @@ public class DBOperations {
         while(c.moveToNext()) {
             hm.put("Idimage", c.getInt(0));
         }
-        c = db.rawQuery("Select website from microbrasserie where id = ?", new String[]{(id+"")});////////TODO: edit SQL query
+        c = db.rawQuery("Select website from microbrasserie where id = ?", new String[]{(id+"")});
         while(c.moveToNext()) {
             hm.put("Website", c.getString(0));
         }
@@ -79,12 +82,48 @@ public class DBOperations {
         return hm;
     }
 
-    public HashMap<String, Object> fillBeer() {
+    public Vector<HashMap> fillBeer() {
+        Vector<HashMap> v = new Vector<HashMap>();
         ouvrirBDBiere();
-        HashMap<String, Object> hm = new HashMap<>();
-
-
-        return hm;
+        int i = 0;
+        Cursor c = db.rawQuery("Select nom from biere",null);
+        while(c.moveToNext()) {
+            v.add(new HashMap());
+            v.elementAt(i).put("Nom", c.getString(0));
+            i++;
+        }
+        i=0;
+        c = db.rawQuery("Select microbrasserie from biere",null);
+        while(c.moveToNext()) {
+            v.elementAt(i).put("Microbrasserie", c.getString(0));
+            i++;
+        }
+        i=0;
+        c = db.rawQuery("Select type from biere",null);
+        while(c.moveToNext()) {
+            v.elementAt(i).put("Type", c.getString(0));
+            i++;
+        }
+        i=0;
+        c = db.rawQuery("Select commentaire from biere",null);
+        while(c.moveToNext()) {
+            v.elementAt(i).put("Commentaire", c.getString(0));
+            i++;
+        }
+        i=0;
+        c = db.rawQuery("Select pourcentageAlcool from biere",null);
+        while(c.moveToNext()) {
+            v.elementAt(i).put("PourcentageAlcool", c.getFloat(0));
+            i++;
+        }
+        i=0;
+        c = db.rawQuery("Select note from biere",null);
+        while(c.moveToNext()) {
+            v.elementAt(i).put("Note", c.getString(0));
+            i++;
+        }
+        fermerBDBiere();
+        return v;
     }
 
     public void ouvrirBDmicrobrasserie(){
