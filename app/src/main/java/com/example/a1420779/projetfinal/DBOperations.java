@@ -13,10 +13,15 @@ import java.util.Vector;
 public class DBOperations {
 
     private DBMicrobrasseries dbMicrobrasserie;
+
+
+
     private SQLiteDatabase db;
+    private DBBiere dbBiere;
 
     public DBOperations(Context c){
         dbMicrobrasserie = new DBMicrobrasseries(c);
+        dbBiere = new DBBiere(c);
 
     }
 
@@ -70,17 +75,43 @@ public class DBOperations {
         while(c.moveToNext()) {
             hm.put("Region", c.getString(0));
         }
-
         fermerBDmicrobrasserie();
         return hm;
     }
 
+    public HashMap<String, Object> fillBeer() {
+        ouvrirBDBiere();
+        HashMap<String, Object> hm = new HashMap<>();
+
+
+        return hm;
+    }
+
     public void ouvrirBDmicrobrasserie(){
-        db = dbMicrobrasserie.getWritableDatabase();
+        db = getDbMicrobrasserie().getWritableDatabase();
     }
 
     public void fermerBDmicrobrasserie(){
-        dbMicrobrasserie.close();
+        getDbMicrobrasserie().close();
     }
 
+    public void ouvrirBDBiere(){
+        db = getDbBiere().getWritableDatabase();
+    }
+
+    public void fermerBDBiere(){
+        getDbBiere().close();
+    }
+
+    protected DBMicrobrasseries getDbMicrobrasserie() {
+        return dbMicrobrasserie;
+    }
+
+    protected DBBiere getDbBiere() {
+        return dbBiere;
+    }
+
+    public SQLiteDatabase getDb() {
+        return db;
+    }
 }

@@ -42,6 +42,17 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, ListeMicrobrasserieActivity.class);
                 startActivity(i);
             }
+            else if(v.getId() == R.id.button3){
+
+                Intent i = new Intent(MainActivity.this, AjouterBiereActivity.class);
+                i.putExtra("nomMicrobrasserie", "");
+                startActivity(i);
+            }
+            else if(v.getId() == R.id.button2){
+                Intent i = new Intent(MainActivity.this, BeerListActivity.class);
+                i.putExtra("nomMicrobrasserie", "");
+                startActivity(i);
+            }
 
         }
     }

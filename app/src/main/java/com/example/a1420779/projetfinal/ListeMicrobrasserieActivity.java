@@ -47,7 +47,7 @@ public class ListeMicrobrasserieActivity extends AppCompatActivity {
         Vector<Integer> vImages = dbo.listeLogoMicrobrasserie();
         Vector<String> vNom = dbo.listeMicrobrasserie();
         Vector<String> vRegion = dbo.listeOrigineMicrobrasserie();
-        dbo.fermerBD();
+        dbo.fermerBDmicrobrasserie();
         for(int i=0; i<vImages.size(); i++){
             map = new HashMap<String, String>();
             map.put("image", vImages.get(i)+"");

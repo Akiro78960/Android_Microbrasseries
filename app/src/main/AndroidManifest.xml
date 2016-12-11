@@ -16,7 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListeMicrobrasserieActivity" />
-        <activity android:name=".MicrobrasserieActivity"></activity>
+        <activity android:name=".MicrobrasserieActivity" />
+        <activity android:name=".AjouterBiereActivity" />
+        <activity android:name=".BeerListActivity"></activity>
     </application>
 
 </manifest>

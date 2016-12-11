@@ -61,5 +61,15 @@ public class MicrobrasserieActivity extends AppCompatActivity {
             }
         });
 
+        btnAjouterBieres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MicrobrasserieActivity.this, AjouterBiereActivity.class);
+                i.putExtra("nomMicrobrasserie", microbrasserie.getNom());
+                startActivity(i);
+
+            }
+        });
+
     }
 }
